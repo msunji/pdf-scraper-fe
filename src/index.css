@@ -1,68 +1,174 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  --red: red;
+  --red-lightest: color-mix(in srgb, var(--red), var(--white) 93%);
+  --white: #ffffff;
+  --black: #221f1f;
+  --grey: #2a2626;
+  --grey-lighter: color-mix(in srgb, var(--grey), var(--white) 70%);
+  --grey-mid: color-mix(in srgb, var(--grey), var(--white) 30%);
+  --blue: #042686;
+  --yellow: #f9f99e;
+  --purple: #4c18f7;
+  --purple-lighter: color-mix(in srgb, var(--purple), var(--white) 30%);
+  --purple-lightest: color-mix(in srgb, var(--purple), var(--white) 80%);
+  --purple-darker: color-mix(in srgb, var(--purple), var(--blue) 50%);
+  --border-radius: 5px;
+  --section-gap: 1rem;
+}
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
 
-  font-synthesis: none;
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100svh;
+  color: var(--grey);
+  background: var(--white);
+  line-height: 1.7;
+  font-size: 18px;
+  font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+  font-weight: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+#app {
+  height: 100%;
+  min-height: 100svh;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 0.75rem;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 2.5em;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+h2 {
+  font-size: 1.842em;
+}
+
+h3 {
+  font-size: 1.3572em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+a:not(.button),
+a:visited:not(.button) {
+  text-decoration: none;
+  color: var(--purple);
+  transition: 0.4s;
+  padding: 2px;
+}
+
+a:hover,
+a:focus {
+  background-color: var(--purple-lightest);
+}
+
+.highlight {
+  background-color: var(--yellow);
+  padding: 2px;
+}
+
+.button {
+  text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  background-color: var(--purple-lighter);
+  color: var(--white);
+  border-radius: 5px;
+  border: none;
+  padding: 0.5rem 0.95rem;
+  font-weight: 700;
+  transition: 0.4s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.button:hover,
+.button:focus {
+  background-color: var(--purple-darker);
+}
+
+.container {
+  --inline-padding: 2rem;
+  --content-max-width: 66ch;
+
+  display: grid;
+  grid-template-columns: 
+    minmax(var(--inline-padding), 1fr) 
+    [content-start] min(calc(100% - var(--inline-padding) * 2), var(--content-max-width))
+    [content-end] 
+    minmax(var(--inline-padding), 1fr);
+}
+
+.container > * {
+  grid-column: content;
+}
+.container section {
+  padding-block: var(--section-gap);
+}
+
+form > * {
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+  font-size: 100%;
+}
+
+.required-input {
+  display: flex;
+}
+
+.required-input span {
+  display: inline-block;
+  margin-left: 3px;
+  font-weight: 300;
+  color: var(--red);
+}
+
+label, label > *:not(small) {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
+input::placeholder {
+  color: var(--grey-lighter);
+}
+
+input[type="text"],
+input[type="password"], 
+input[type="email"] {
+  font-size: inherit;
+  color: var(--grey-400);
+  width: 100%;
+  display: block;
+  padding: 0.65rem;
+  border: 1px solid var(--grey-lighter);
+  border-radius: var(--border-radius);
+}
+
+.form-input-error {
+  margin-block: 8px;
+  font-size: 0.85em;
+  padding: 0.56rem 1rem;
+  background-color: var(--red-lightest);
+  color: var(--red);
+  border-radius: var(--border-radius);
 }
