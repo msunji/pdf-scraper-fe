@@ -30,7 +30,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         return unsubscribe;
     }, []);
 
-    const login = async (email: string, password: string) => {
+    const login = async (auth:Auth, email: string, password: string) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
