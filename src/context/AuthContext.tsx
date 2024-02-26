@@ -9,7 +9,7 @@ type AuthProviderProps = {
 
 type AuthContextType = {
     currentUser: User | null;
-    login: (auth: Auth, email: string, password: string) => Promise<User | void>;
+    login: (auth: Auth, email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
