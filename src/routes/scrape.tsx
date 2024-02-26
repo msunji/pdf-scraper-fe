@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar';
+import PdfForm from '../components/PdfForm';
 
 function Scrape() {
     return (
@@ -32,6 +33,9 @@ function Scrape() {
                     </ul>
                     </li>
                 </ol>
+            </section>
+            <section>
+                <PdfForm />
             </section>
         </>
     )
