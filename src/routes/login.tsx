@@ -1,7 +1,10 @@
+import { auth } from '../firebase/firebase';
+import { useState } from 'react';
+
 function Login() {
     return (
         <>
-            <h1>Login Component Goes here!</h1>
+            <h1>Login to App</h1>
         </>
     )
 }
