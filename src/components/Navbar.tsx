@@ -1,10 +1,14 @@
 function Navbar() {
     return (
         <nav>
-            <div className='nav-details'>
-            <p>Logged in as: </p>
-            <button className='button'>Logout</button>
-            </div>
+            <ul className='nav-details'>
+                <li>Instructions</li>
+                <li>History</li>
+                <li>
+                    <p>Logged in as: </p>
+                <button className='button'>Logout</button>
+                </li>
+            </ul>
         </nav>
     )
 }
