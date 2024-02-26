@@ -23,7 +23,12 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
-    'react/no-unescaped-entities': 0
+    'react/no-unescaped-entities': 0,
+    '@typescript-eslint/no-misused-promises': [2, {
+      'checksVoidReturn': {
+        'attributes': false
+      }
+    }] 
   },
 }
 
