@@ -19,7 +19,6 @@ const router = createBrowserRouter([
   {
     path: "/scrape",
     element: <Scrape />,
-    errorElement: <ErrorPage />
   }
 ])
 
