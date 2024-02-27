@@ -10,11 +10,11 @@ const schema = yup
     .object({
         pdfUrl: yup
             .string()
-            .required(),
+            .required()
+            .matches(/\.pdf$/, 'This form only takes PDF files'),
         reportType: yup
             .string()
-            .required()
-            .matches(/(\.|\/)(pdf)/, 'This form only accepts PDF files')
+            .required()     
     })
 
 type FormData = {
@@ -35,29 +35,26 @@ function PdfForm() {
         resolver: yupResolver(schema)
     });
     
-    const onSubmit:SubmitHandler<FormData> = (data:FormData) => console.log(data, errors);
+    const onSubmit:SubmitHandler<FormData> = (data:FormData) => console.log(data);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <label htmlFor='url'>PDF URL/Address<span>*</span></label>
+                <label htmlFor='url' className='required-input'>PDF URL/Address<span>*</span></label>
                 <input
                     id='url'
                     type='text'
                     {...register('pdfUrl')}
                 />
                 { errors.pdfUrl?.type === 'required' && (
-                    <p>A valid PSE Report URL is required</p>
+                    <p className='form-input-error'>A valid PSE Report URL is required (e.g. http://pse.com.ph/.../202023-EOD.pdf)</p>
                 )}
-                { errors.reportType?.type === 'matches' && (
-                    <p>Please input a valid PDF file (e.g. http://pse.com.ph/.../202023-EOD.pdf)</p>
-                ) }
             </div>
             <div>
-                <fieldset>
-                    <legend>Select a report type</legend>
+                <fieldset className='radio-container'>
+                    <legend className='required-input'><strong>Select a report type</strong></legend>
                     { errors.reportType?.type === 'required' && (
-                        <p>A valid PSE Report URL is required</p>
+                        <p className='form-input-error'>Please select a report type below</p>
                     )}
 
                     <div className='radio-container__input'>
@@ -85,7 +82,7 @@ function PdfForm() {
                 </fieldset>
             </div>
 
-            <input type="submit" />
+            <button className="button" type="submit">Scrape</button>
         </form>
     )
 }
