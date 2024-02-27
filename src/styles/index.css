@@ -181,3 +181,31 @@ input[type="email"] {
   color: var(--red);
   border-radius: var(--border-radius);
 }
+
+.radio-container {
+  border: 1px solid var(--grey-lighter);
+  border-radius: calc(var(--border-radius) * 2);
+  border-color: #ccc;
+  padding: 0 1rem 1.5rem 1rem;
+}
+.radio-container__legend {
+  font-size: 0.85em;
+  padding: 0 0.5rem;
+  font-weight: 700;
+  color: var(--grey-400);
+}
+.radio-container__input {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.radio-container__input label > * {
+  margin-left: 1rem;
+  display: block;
+}
+.radio-container__input small {
+  display: block;
+  color: var(--grey-mid);
+  font-size: 0.75em;
+}
