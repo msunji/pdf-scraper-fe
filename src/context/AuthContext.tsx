@@ -13,9 +13,9 @@ type AuthContextType = {
     logout: () => Promise<void>;
 }
 
-export const auth = getAuth(firebaseApp);
+const auth = getAuth(firebaseApp);
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: AuthProviderProps) {
     const [currentUserSession, setCurrentUserSession] = useState<User | null>(null);
@@ -56,4 +56,4 @@ function AuthProvider({ children }: AuthProviderProps) {
     )
 }
 
-export default AuthProvider;
+export { AuthProvider, auth, AuthContext }
