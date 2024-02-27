@@ -1,12 +1,15 @@
-import { auth } from '../firebase/firebase';
+import LoginForm from '../components/LoginForm';
 import { useState } from 'react';
+
 
 function Login() {
     return (
-        <>
-            <h1>Login to App</h1>
-            
-        </>
+        <main className="login-container">
+            <section className="login-form">
+                <h1>Login</h1>
+                <LoginForm />
+            </section>
+        </main>
     )
 }
 
