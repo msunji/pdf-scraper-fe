@@ -5,6 +5,7 @@ function Scrape() {
     return (
         <>
             <Navbar />
+            <main className="container">
             <section>
                 <h1>PSE Market Report PDF Scraper</h1>
                 <p>This is a tool for scraping <a href='https://www.pse.com.ph/market-report/'>End of Day Quotes</a> from the PSE website.</p>
@@ -37,6 +38,7 @@ function Scrape() {
             <section>
                 <PdfForm />
             </section>
+            </main>
         </>
     )
 }
