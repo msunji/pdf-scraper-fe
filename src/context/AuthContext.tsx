@@ -1,20 +1,33 @@
-import { ReactNode, createContext, useState, useEffect } from 'react';
+import { ReactNode, createContext, useState, useEffect, useContext } from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getAuth, User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+
+const auth = getAuth(firebaseApp);
 
 interface AuthProviderProps {
     children?: ReactNode
 }
 
-interface AuthContextType {
-    currentUserSession: User | null;
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
+const login = async (email: string, password: string) => {
+    try {
+        await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+const logout = async () => {
+    await auth.signOut();
 }
 
-const auth = getAuth(firebaseApp);
+interface AuthContextType {
+    currentUserSession: User | null;
+    login: typeof login;
+    logout: typeof logout;
+}
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const useAuth = () => useContext(AuthContext)!;
 
 function AuthProvider({ children }: AuthProviderProps) {
     const [currentUserSession, setCurrentUserSession] = useState<User | null>(null);
@@ -30,24 +43,12 @@ function AuthProvider({ children }: AuthProviderProps) {
         return unsubscribe;
     }, []);
 
-    const login = async (email: string, password: string) => {
-        try {
-            await signInWithEmailAndPassword(auth, email, password);
-        } catch (error) {
-            console.error(error)
-        }
-    };
-
-    const logout = async () => {
-        await auth.signOut();
-    }
-
     const value: AuthContextType ={
         currentUserSession,
         login,
         logout
     }
-
+    
     return (
         <AuthContext.Provider value={value}>
             { loading ? <p>Loading</p> : children }
@@ -55,4 +56,5 @@ function AuthProvider({ children }: AuthProviderProps) {
     )
 }
 
-export { AuthProvider, AuthContext }
+
+export { AuthProvider, useAuth }
