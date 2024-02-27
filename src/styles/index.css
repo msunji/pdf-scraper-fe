@@ -131,7 +131,7 @@ a:focus {
   justify-content: space-between;
   max-width: 99ch;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 1rem;
 }
 .nav-header {
   font-weight: 700;
