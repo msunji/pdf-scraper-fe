@@ -8,29 +8,30 @@ type AuthProviderProps = {
 }
 
 type AuthContextType = {
-    currentUser: User | null;
+    currentUserSession: User | null;
     login: (auth: Auth, email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
-const auth = getAuth(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 function AuthProvider({ children }: AuthProviderProps) {
-    const [currentUser, setCurrentUser] = useState<User | null>(null);
+    const [currentUserSession, setCurrentUserSession] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user: User | null) => {
-            setCurrentUser(user);
+        const unsubscribe = onAuthStateChanged(auth, (userSession: User | null) => {
+            console.log("Session Info", userSession);
+            setCurrentUserSession(userSession);
             setLoading(false);
         });
 
         return unsubscribe;
     }, []);
 
-    const login = async (auth:Auth, email: string, password: string) => {
+    const login = async (auth: Auth, email: string, password: string) => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
         } catch (error) {
@@ -43,7 +44,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
 
     const value: AuthContextType ={
-        currentUser,
+        currentUserSession,
         login,
         logout
     }
