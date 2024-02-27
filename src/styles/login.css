@@ -1,0 +1,19 @@
+.login-container {
+    height: inherit;
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4rem;
+}
+h1 {
+    font-size: 1.9em;
+    color: red;
+}
+.login-form {
+    border: 1px solid var(--grey-lighter);
+    max-width: 40ch;
+    background: var(--white);
+    padding: 2.47rem 2.67rem;
+    border-radius: calc(var(--border-radius) * 2);
+}
