@@ -1,4 +1,17 @@
+import { useAuth } from '../context/AuthContext';
+
 function Navbar() {
+    const { currentUserSession, logout } = useAuth();
+    console.log('nav session', currentUserSession);
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } catch(error) {
+            console.error(error)
+        }
+    }
+    
     return (
         <nav>
             <div className='nav-container'>
@@ -6,8 +19,8 @@ function Navbar() {
                 <ul className='nav-details'>
                     <li>Instructions</li>
                     <li className='nav-details__user'>
-                        <p>email </p>
-                        <button className='button'>Logout</button>
+                        <p>{ currentUserSession ? currentUserSession.email : 'Not Logged In'}</p>
+                        <button className='button' onClick={handleLogout}>Logout</button>
                     </li>
                 </ul>
             </div>

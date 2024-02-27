@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
+import { useAuth } from '../context/AuthContext';
 import { 
     useForm, 
     SubmitHandler,
@@ -16,11 +16,13 @@ const schema = yup
             .required()
     })
 
-type FormData = {
+interface FormData {
     email: string
     password: string
 }
+
 function LoginForm() {
+    const { login } = useAuth();
     const {
         register,
         handleSubmit,
@@ -28,18 +30,26 @@ function LoginForm() {
     } = useForm<FormData>({
         defaultValues: {
             email: '',
-            password: '******',
+            password: '',
         },
         resolver: yupResolver(schema)
     });
 
-    const onSubmit:SubmitHandler<FormData> = (data:FormData) => console.log(data);
-    
+    const onLogin:SubmitHandler<FormData> = async (data:FormData) => {
+        try {
+            await login(data.email, data.password)
+        } catch (error) {
+            console.error(error)
+        }
+    };
+
+
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <>
+            <form onSubmit={handleSubmit(onLogin)}>
             <label>Email</label>
             <input
-                id='email'
+                 id='email'
                 type='text'
                 placeholder="your-email@email.com"
                 {...register('email')}
@@ -52,7 +62,9 @@ function LoginForm() {
                 {...register('password')}
             />
             <button type="submit" className="button">Login</button>
-        </form>
+            </form>
+        </>
+
     )
 }
 
