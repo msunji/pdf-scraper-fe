@@ -6,6 +6,7 @@
   --grey: #2a2626;
   --grey-lighter: color-mix(in srgb, var(--grey), var(--white) 70%);
   --grey-mid: color-mix(in srgb, var(--grey), var(--white) 30%);
+  --blue-darkest: #192c34;
   --blue: #042686;
   --yellow: #f9f99e;
   --purple: #4c18f7;
@@ -132,6 +133,27 @@ a:focus {
 .nav-details {
   list-style: none;
   display: flex;
+}
+
+.login-container {
+  height: inherit;
+  min-height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--blue-darkest);
+}
+
+.login-form {
+  width: 100%;
+  max-width: 47ch;
+  background: var(--white);
+  padding: 2rem 2.3rem;
+  border-radius: calc(var(--border-radius) * 2);
+}
+
+.login-form > h1 {
+  font-size: 1.7em;
 }
 
 form > * {
