@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FirebaseError } from 'firebase/app';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const schema = yup
     .object({
@@ -21,6 +22,11 @@ interface FormData {
 
 function LoginForm() {
     const { login } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    let from = location.state?.from?.pathname || "/";
+
     const {
         register,
         handleSubmit,
@@ -37,6 +43,9 @@ function LoginForm() {
     const onLogin:SubmitHandler<FormData> = async (data:FormData) => {
         try {
             await login(data.email, data.password);
+            navigate(from, {
+                replace: true
+            })
         } catch (e) {
             const error = e instanceof FirebaseError;
             console.log(error);
