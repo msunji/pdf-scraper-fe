@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/consistent-type-definitions */
 import { 
     useForm, 
     SubmitHandler,
@@ -19,7 +18,7 @@ const schema = yup
             .required()     
     })
 
-type FormData = {
+interface FormData {
     pdfUrl: string
     reportType: string
 }
@@ -38,12 +37,14 @@ function PdfForm() {
     });
     
     const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-        console.log(data);
+        // console.log(data);
         try {
-            const res = await axios.post('http://localhost:5000/api/submit-form', data);
-            // console.log(res.data);
+            await axios.post('http://localhost:5000/api/submit-form', data);
         } catch (error) {
-            console.error('Form submission error:', error);
+            if (error.code === 'auth/invalid-credential') {
+                console.log('invalid auth')
+            }
+            console.log('Form submission error:', error.code);
         }
     };
 
