@@ -5,6 +5,8 @@ import {
 } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import axios from 'axios';
+
 
 const schema = yup
     .object({
@@ -35,7 +37,15 @@ function PdfForm() {
         resolver: yupResolver(schema)
     });
     
-    const onSubmit:SubmitHandler<FormData> = (data:FormData) => console.log(data);
+    const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
+        console.log(data);
+        try {
+            const res = await axios.post('http://localhost:5000/api/submit-form', data);
+            // console.log(res.data);
+        } catch (error) {
+            console.error('Form submission error:', error);
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
