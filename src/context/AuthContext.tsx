@@ -1,7 +1,6 @@
 import { ReactNode, createContext, useState, useEffect, useContext } from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getAuth, User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
-import { FirebaseError } from 'firebase/app';
 
 const auth = getAuth(firebaseApp);
 
