@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
 import Layout from './components/Layout.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 import Login from './routes/login.tsx';
 import Scrape from './routes/scrape.tsx';
 import Instructions from './routes/instructions.tsx';
@@ -21,13 +22,13 @@ const router = createBrowserRouter([
   }
   ,
   {
-    element: <Layout/>,
+    element: (
+      <ProtectedRoute>
+        <Layout/>
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: '/scrape',
-        element: <Scrape />
-      },
       {
         path: '/scrape',
         element: <Scrape />
