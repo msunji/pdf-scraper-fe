@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useState, useEffect, useContext } from 'react';
 import firebaseApp from '../firebase/firebase';
 import { getAuth, User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { FirebaseError } from 'firebase/app';
 
 const auth = getAuth(firebaseApp);
 
@@ -8,22 +9,10 @@ interface AuthProviderProps {
     children?: ReactNode
 }
 
-const login = async (email: string, password: string) => {
-    try {
-        await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-        console.error(error)
-    }
-};
-
-const logout = async () => {
-    await auth.signOut();
-}
-
 interface AuthContextType {
     currentUserSession: User | null;
-    login: typeof login;
-    logout: typeof logout;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,13 +24,21 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (userSession: User | null) => {
-            console.log("Session Info", userSession);
+            // console.log("Session Info", userSession);
             setCurrentUserSession(userSession);
             setLoading(false);
         });
 
         return unsubscribe;
     }, []);
+
+    const login = async (email: string, password: string) => {
+        await signInWithEmailAndPassword(auth, email, password);
+    };
+
+    const logout = async () => {
+        await auth.signOut();
+    }
 
     const value: AuthContextType ={
         currentUserSession,
