@@ -2,8 +2,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
-    const { currentUserSession, logout } = useAuth();
-    console.log('nav session', currentUserSession);
+    const { logout } = useAuth();
 
     const handleLogout = async () => {
         try {
@@ -16,11 +15,10 @@ function Navbar() {
     return (
         <nav>
             <div className='nav-container'>
-                <p className='nav-header'><Link to="scrape">PSE PDF Scraper</Link></p>
                 <ul className='nav-details'>
+                    <li><Link to="scrape">Scrape</Link></li>
                     <li><Link to="instructions">Instructions</Link></li>
                     <li className='nav-details__user'>
-                        <p>{ currentUserSession ? currentUserSession.email : 'Not Logged In'}</p>
                         <button className='button' onClick={handleLogout}>Logout</button>
                     </li>
                 </ul>
