@@ -244,3 +244,10 @@ input[type="email"] {
   color: var(--grey-mid);
   font-size: 0.75em;
 }
+
+.faqs-container__question {
+  margin-bottom: 1rem;
+}
+.faqs-container__question p:first-child {
+  font-weight: 700;
+}
