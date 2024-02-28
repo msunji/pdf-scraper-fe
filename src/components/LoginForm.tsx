@@ -20,12 +20,27 @@ interface FormData {
     password: string
 }
 
+interface Location {
+    pathname: string;
+    search: string;
+    hash: string;
+    state: unknown;
+    key: string;
+}
+
+interface LocationProps {
+    state: {
+        from: Location
+    }
+}
+
 function LoginForm() {
     const { login } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation() as unknown as LocationProps;
 
-    let from = location.state?.from?.pathname || "/";
+
+    const from = location.state?.from?.pathname || "/";
 
     const {
         register,
