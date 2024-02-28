@@ -8,10 +8,10 @@ const schema = yup
     .object({
         email: yup
             .string()
-            .required(),
+            .required('Please enter a valid email address'),
         password: yup
             .string()
-            .required()
+            .required('Please enter a valid password')
     })
 
 interface FormData {
@@ -71,8 +71,8 @@ function LoginForm() {
                 placeholder='******'
                 {...register('password')}
             />
-            { errors.email?.type === 'auth-error' && (
-                    <p className='form-input-error'>Invalid login credentials</p>
+            { (errors.email ?? errors.password) && (
+                    <p className='form-input-error'>{ errors.email?.message ?? errors.password?.message }</p>
             )}
             <button type="submit" className="button">Login</button>
             </form>
