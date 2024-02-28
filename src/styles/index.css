@@ -256,6 +256,24 @@ input[type="email"] {
   font-weight: 700;
 }
 
+.logged-in-msg {
+  font-size: 0.7572em;
+  font-weight: normal;
+  color: var(--grey-mid);
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+}
+
+.logged-in-msg:before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: var(--grey-mid);
+  margin-right: 0.5rem;
+  flex-grow: 0.2;
+}
+
 @media only screen and (min-width: 600px) {
   h1 {
     font-size: 2.5em;
