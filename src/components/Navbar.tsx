@@ -16,7 +16,7 @@ function Navbar() {
         <nav>
             <div className='nav-container'>
                 <ul className='nav-details'>
-                    <li><Link to="scrape">Scrape</Link></li>
+                    <li><Link to="/">Scrape</Link></li>
                     <li><Link to="instructions">Instructions</Link></li>
                     <li className='nav-details__user'>
                         <button className='button' onClick={handleLogout}>Logout</button>
