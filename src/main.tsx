@@ -2,13 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
-  RouterProvider
+  RouterProvider,
 } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.tsx';
+import Layout from './components/Layout.tsx';
 import Login from './routes/login.tsx';
 import Scrape from './routes/scrape.tsx';
+import Instructions from './routes/instructions.tsx';
 import ErrorPage from './routes/error-page.tsx';
 import './styles/index.css';
+
 
 const router = createBrowserRouter([
   {
@@ -18,8 +21,22 @@ const router = createBrowserRouter([
   }
   ,
   {
-    path: "/scrape",
-    element: <Scrape />,
+    element: <Layout/>,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '/scrape',
+        element: <Scrape />
+      },
+      {
+        path: '/scrape',
+        element: <Scrape />
+      },
+      {
+        path: '/instructions',
+        element: <Instructions />
+      },
+    ]
   }
 ])
 
