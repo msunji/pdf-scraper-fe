@@ -1,7 +1,6 @@
-import { useRouteError, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function ErrorPage() {
-    const error = useRouteError();
     const navigate = useNavigate();
 
     return (
