@@ -56,15 +56,15 @@ h3 {
 }
 
 h1 {
-  font-size: 2.5em;
+  font-size: 1.9em;
 }
 
 h2 {
-  font-size: 1.842em;
+  font-size: 1.242em;
 }
 
 h3 {
-  font-size: 1.3572em;
+  font-size: 0.7572em;
 }
 
 strong,
@@ -126,10 +126,14 @@ a:focus {
   padding-block: var(--section-gap);
 }
 
+nav {
+  font-size: 0.8em;
+}
+
 .nav-container {
   display: flex;
-  justify-content: space-between;
-  max-width: 99ch;
+  justify-content: flex-end;
+  max-width: 90%;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -246,8 +250,22 @@ input[type="email"] {
 }
 
 .faqs-container__question {
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
 }
 .faqs-container__question p:first-child {
   font-weight: 700;
+}
+
+@media only screen and (min-width: 600px) {
+  h1 {
+    font-size: 2.5em;
+  }
+  
+  h2 {
+    font-size: 1.842em;
+  }
+  
+  h3 {
+    font-size: 1.3572em;
+  }
 }
