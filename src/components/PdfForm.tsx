@@ -35,17 +35,25 @@ function PdfForm() {
         },
         resolver: yupResolver(schema)
     });
-    
+
+    // const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
+    //     // console.log(data);
+    //     try {
+    //         await axios.post('http://localhost:5000/api/submit-form', data);
+    //     } catch (error) {
+    //         if (error.code === 'auth/invalid-credential') {
+    //             console.log('invalid auth')
+    //         }
+    //         console.log('Form submission error:', error.code);
+    //     }
+    // };
+
     const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-        // console.log(data);
-        try {
-            await axios.post('http://localhost:5000/api/submit-form', data);
-        } catch (error) {
-            if (error.code === 'auth/invalid-credential') {
-                console.log('invalid auth')
-            }
-            console.log('Form submission error:', error.code);
-        }
+        return new Promise<void>(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, 2000)
+        })
     };
 
     return (
@@ -93,7 +101,9 @@ function PdfForm() {
                 </fieldset>
             </div>
 
-            <button className="button" type="submit" disabled={isSubmitting}>Scrape</button>
+            <button className='button' type='submit' disabled={isSubmitting}>
+                { isSubmitting ? 'Scraping' : 'Scrape'}
+            </button>
         </form>
     )
 }
