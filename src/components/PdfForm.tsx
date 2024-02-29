@@ -27,7 +27,7 @@ function PdfForm() {
     const {
         register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors, isSubmitting }
     } = useForm<FormData>({
         defaultValues: {
             pdfUrl: "",
@@ -93,7 +93,7 @@ function PdfForm() {
                 </fieldset>
             </div>
 
-            <button className="button" type="submit">Scrape</button>
+            <button className="button" type="submit" disabled={isSubmitting}>Scrape</button>
         </form>
     )
 }
