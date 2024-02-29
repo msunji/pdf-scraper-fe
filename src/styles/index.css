@@ -107,6 +107,11 @@ a:focus {
   background-color: var(--purple-darker);
 }
 
+button[disabled=disabled], .button:disabled {
+  background-color: var(--grey-lighter);
+  cursor: wait;
+}
+
 .container {
   --inline-padding: 2rem;
   --content-max-width: 66ch;
