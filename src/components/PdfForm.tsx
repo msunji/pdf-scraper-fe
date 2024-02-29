@@ -1,7 +1,5 @@
-import { 
-    useForm, 
-    SubmitHandler,
-} from 'react-hook-form';
+import { useState, useEffect } from 'react';
+import { useForm, SubmitHandler, useFormState } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -27,34 +25,59 @@ function PdfForm() {
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting }
+        reset,
+        formState: { errors, isSubmitting, isSubmitSuccessful }
     } = useForm<FormData>({
         defaultValues: {
-            pdfUrl: "",
-            reportType: "",
+            pdfUrl: '',
+            reportType: '',
         },
         resolver: yupResolver(schema)
     });
 
+    const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+    const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
+        // console.log(data);
+        try {
+            await axios.post('http://localhost:5000/api/submit-form', data);
+        } catch (error) {
+            if (error.code === 'auth/invalid-credential') {
+                console.log('invalid auth')
+            }
+            console.log('Form submission error:', error.code);
+        }
+    };
+
     // const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-    //     // console.log(data);
     //     try {
-    //         await axios.post('http://localhost:5000/api/submit-form', data);
+    //         // Simulate an async API call
+    //         const response = await simulateApiCall(data);
+    //         console.log('API call successful:', response);
+    //         setSuccessMsg('Data successfully scraped!');
+    //         reset({ ...data })
     //     } catch (error) {
-    //         if (error.code === 'auth/invalid-credential') {
-    //             console.log('invalid auth')
-    //         }
-    //         console.log('Form submission error:', error.code);
+    //         // Handle errors
+    //         console.error('API call failed:', error);
     //     }
     // };
 
-    const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-        return new Promise<void>(resolve => {
-            setTimeout(() => {
-                resolve();
-            }, 2000)
-        })
+    const simulateApiCall = async (data: FormData) => {
+        // Simulate an API call with a 2-second delay
+        await new Promise<void>(resolve => setTimeout(resolve, 2000));
+    
+        // Simulate a successful response
+        return { data: 'Mock response' };
     };
+
+    useEffect(() => {
+        if (isSubmitSuccessful) {
+            reset({
+                pdfUrl: '',
+                reportType: ''
+            })
+        }
+    }, [isSubmitSuccessful, reset])
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -100,10 +123,12 @@ function PdfForm() {
                     </div>
                 </fieldset>
             </div>
-
-            <button className='button' type='submit' disabled={isSubmitting}>
-                { isSubmitting ? 'Scraping' : 'Scrape'}
-            </button>
+            <div className="pdf-form-submit-container">
+                <button className='button' type='submit' disabled={isSubmitting}>
+                    { isSubmitting ? 'Scraping' : 'Scrape'}
+                </button>
+                { successMsg && (<p>Data was scraped successfully</p>)}
+            </div>
         </form>
     )
 }
