@@ -3,6 +3,7 @@
   --red-lightest: color-mix(in srgb, var(--red), var(--white) 93%);
   --white: #ffffff;
   --black: #221f1f;
+  --green: #00c77b;
   --grey: #2a2626;
   --grey-lighter: color-mix(in srgb, var(--grey), var(--white) 70%);
   --grey-mid: color-mix(in srgb, var(--grey), var(--white) 30%);
@@ -252,6 +253,24 @@ input[type="email"] {
   display: block;
   color: var(--grey-mid);
   font-size: 0.75em;
+}
+
+.pdf-form-submit-container {
+  display: flex;
+  align-items: center;
+}
+
+.pdf-form-submit-container p {
+  font-size: 0.8em;
+  margin-left: 2rem;
+}
+
+.pdf-form-submit-container__success {
+  color: var(--green);
+}
+
+.pdf-form-submit-container__error {
+  color: var(--red);
 }
 
 .faqs-container__question {
