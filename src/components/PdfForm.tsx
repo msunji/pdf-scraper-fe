@@ -25,6 +25,7 @@ function PdfForm() {
     const {
         register,
         handleSubmit,
+        setError,
         reset,
         formState: { errors, isSubmitting, isSubmitSuccessful }
     } = useForm<FormData>({
@@ -41,41 +42,25 @@ function PdfForm() {
         // console.log(data);
         try {
             await axios.post('http://localhost:5000/api/submit-form', data);
-        } catch (error) {
-            if (error.code === 'auth/invalid-credential') {
-                console.log('invalid auth')
-            }
-            console.log('Form submission error:', error.code);
+            setSuccessMsg('PDF scraped successfully')
+        } catch (error:unknown) {
+            setError('root.random', {
+                type: 'random',
+                message: 'Form submission failed. Please retry or ask for assistance.'
+            })
+            setError('root.serverError', {
+                type: '500',
+                message: 'There seems to be an issue with the server. Please retry or ask for assistance.'
+            })
         }
-    };
-
-    // const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-    //     try {
-    //         // Simulate an async API call
-    //         const response = await simulateApiCall(data);
-    //         console.log('API call successful:', response);
-    //         setSuccessMsg('Data successfully scraped!');
-    //         reset({ ...data })
-    //     } catch (error) {
-    //         // Handle errors
-    //         console.error('API call failed:', error);
-    //     }
-    // };
-
-    const simulateApiCall = async (data: FormData) => {
-        // Simulate an API call with a 2-second delay
-        await new Promise<void>(resolve => setTimeout(resolve, 2000));
-    
-        // Simulate a successful response
-        return { data: 'Mock response' };
     };
 
     useEffect(() => {
         if (isSubmitSuccessful) {
-            reset({
-                pdfUrl: '',
-                reportType: ''
-            })
+            reset()
+            setTimeout(() => {
+                setSuccessMsg(null)
+            }, 3500)
         }
     }, [isSubmitSuccessful, reset])
 
@@ -86,9 +71,10 @@ function PdfForm() {
                 <input
                     id='url'
                     type='text'
+                    placeholder='example-report.pdf'
                     {...register('pdfUrl')}
                 />
-                { errors.pdfUrl?.type === 'required' && (
+                { errors.pdfUrl?.type === 'required' || errors.pdfUrl?.type === 'matches' && (
                     <p className='form-input-error'>A valid PSE Report URL is required (e.g. http://pse.com.ph/.../202023-EOD.pdf)</p>
                 )}
             </div>
@@ -127,7 +113,12 @@ function PdfForm() {
                 <button className='button' type='submit' disabled={isSubmitting}>
                     { isSubmitting ? 'Scraping' : 'Scrape'}
                 </button>
-                { successMsg && (<p>Data was scraped successfully</p>)}
+                { successMsg && (<p className="pdf-form-submit-container__success">
+                    Data was scraped successfully
+                </p>)}
+                { errors.root && (<p className="pdf-form-submit-container__error">
+                    { errors.root?.random?.message }
+                </p>) }
             </div>
         </form>
     )
