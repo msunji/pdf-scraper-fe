@@ -39,9 +39,8 @@ function PdfForm() {
     const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
     const onSubmit:SubmitHandler<FormData> = async (data:FormData) => {
-        // console.log(data);
         try {
-            await axios.post('http://localhost:5000/api/submit-form', data);
+            await axios.post(`${import.meta.env.VITE_PYTHONANYWHERE_WEB_APP}/api/submit-form`, data);
             setSuccessMsg('PDF scraped successfully')
         } catch (error:unknown) {
             setError('root.random', {
